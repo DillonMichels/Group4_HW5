@@ -21,7 +21,7 @@ $(STOPPED) : $(CLEANED)
 
 # Step 3: Report frequency of words
 $(FREQS): $(STOPPED)
-	cat $< | YYY | sort -nr > $@
+	gawk -f count_words.awk $< | sort -nr > $@
 
 # Step 4: Extract Top 10 most frequent words
 $(TOP_WORDS): $(FREQS)
@@ -31,9 +31,10 @@ $(TOP_WORDS): $(FREQS)
 $(TABLE): $(CLEANED) $(TOP_WORDS)
 	gawk -f ZZZ.awk PASS=1 $(TOP_WORDS) PASS=2 $(CLEANED) > $@
 
-# Cleanup (Windows-based cleanup)
+# Cleanup (Cross-Platform)
 clean:
-	- powershell -Command "Remove-Item -Force cleaned.txt, tokens.txt, word_counts.txt, top.txt, table.txt"
+	@rm -f cleaned.txt stop.txt word_counts.txt top.txt table.txt 2>/dev/null || \
+	powershell -Command "Remove-Item -Force cleaned.txt, stop.txt, word_counts.txt, top.txt, table.txt" 2>$null
 
 
 # Step commands (instead of recursive `$(MAKE)`)
