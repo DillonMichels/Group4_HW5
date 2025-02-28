@@ -7,6 +7,15 @@ FREQS = word_counts.txt
 TOP_WORDS = top.txt
 TABLE = table.txt
 
+# Define the AWK script for counting word frequencies
+YYY = gawk '{ \
+    for (i = 1; i <= NF; i++) freq[$$i]++; \
+} \
+END { \
+    for (word in freq) print freq[word], word; \
+}'
+
+
 # Run the full pipeline
 all: $(TABLE)
 
@@ -21,7 +30,7 @@ $(STOPPED) : $(CLEANED)
 
 # Step 3: Report frequency of words
 $(FREQS): $(STOPPED)
-	gawk -f count_words.awk $< | sort -nr > $@
+	cat $< | $(YYY) | sort -nr > $@
 
 # Step 4: Extract Top 10 most frequent words
 $(TOP_WORDS): $(FREQS)
@@ -33,7 +42,7 @@ $(TABLE): $(CLEANED) $(TOP_WORDS)
 
 # Cleanup (Cross-Platform)
 clean:
-	@rm -f cleaned.txt stop.txt word_counts.txt top.txt table.txt 2>/dev/null || \
+	@rm -f 	rm -f $(CLEANED) $(TOKENS) $(STOPPED) $(FREQS) $(TOP_WORDS) $(TABLE) || \
 	powershell -Command "Remove-Item -Force cleaned.txt, stop.txt, word_counts.txt, top.txt, table.txt" 2>$null
 
 
