@@ -67,6 +67,5 @@ PASS == 2 {
     if (DEBUG) {
         print "DEBUG: Final CSV output: " output > "/dev/stderr";
     }
-    
     print output;
 }
