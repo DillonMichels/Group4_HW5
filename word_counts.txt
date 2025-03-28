@@ -1,10 +1,12 @@
+82 we
 53 data
 48 key
 48 engineering
 48 challenging
-45 can
+45 do
 45 aspect
 44 example
+44 and
 43 however
 43 ai
 42 machine
@@ -12,9 +14,11 @@
 41 probability
 41 database
 41 consider
+40 yes
 40 optimization
 40 analysis
 39 performance
+39 how
 39 cloud
 38 visualization
 38 storage
